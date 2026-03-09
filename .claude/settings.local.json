@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:adoratorio.studio)",
+      "WebFetch(domain:sharm.framer.website)"
+    ]
+  }
+}

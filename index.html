@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dennis Bakhuis</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #0e0e0e;
+      --text: #ffffff;
+      --text-muted: #888;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── Header ── */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 20px 28px;
+      font-size: 14px;
+      line-height: 1.4;
+      color: var(--text-muted);
+    }
+
+    .header a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .header a:hover {
+      color: var(--text);
+    }
+
+    /* ── Hero section ── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* ── ASCII Art ── */
+    .ascii-art {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      line-height: 1.2;
+      letter-spacing: 2px;
+      white-space: pre;
+      color: #ffffff;
+      user-select: none;
+    }
+
+    /* ── Scroll hint ── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 180px;
+      right: 28px;
+      font-size: 13px;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+
+    /* ── Big title ── */
+    .big-title-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    .big-title {
+      display: flex;
+      align-items: baseline;
+      white-space: nowrap;
+      padding: 12px 28px;
+      transition: justify-content 0.3s;
+    }
+
+    .big-title h1 {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 600;
+      font-size: clamp(64px, 12vw, 190px);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      transform-origin: right top;
+      transition: transform 0.1s linear, font-size 0.1s linear;
+      width: 100%;
+    }
+
+    .big-title h1.scrolled {
+      font-size: clamp(24px, 3vw, 42px);
+      text-align: right;
+      letter-spacing: -0.02em;
+    }
+
+    /* ── Content below ── */
+    .content-below {
+      min-height: 200vh;
+      padding: 80px 28px;
+    }
+
+    .content-below .placeholder-section {
+      max-width: 800px;
+      margin: 0 auto 120px;
+    }
+
+    .content-below h2 {
+      font-size: 32px;
+      font-weight: 500;
+      margin-bottom: 24px;
+      color: var(--text);
+    }
+
+    .content-below p {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <span>Data Scientist &<br>Engineer based in<br>the Netherlands.</span>
+    <span>● <span id="clock"></span></span>
+    <a href="#contact">Contact</a>
+  </header>
+
+  <section class="hero">
+    <div class="ascii-art" id="ascii"></div>
+    <span class="scroll-hint">scroll down</span>
+  </section>
+
+  <div class="big-title-wrapper" id="titleWrapper">
+    <div class="big-title">
+      <h1 id="bigTitle">Dennis Bakhuis</h1>
+    </div>
+  </div>
+
+  <div class="content-below">
+    <div class="placeholder-section">
+      <h2>Selected Works</h2>
+      <p>Scroll content goes here. The title above stays pinned to the top of the viewport as you scroll through this area.</p>
+    </div>
+    <div class="placeholder-section">
+      <h2>About</h2>
+      <p>More content to demonstrate the sticky scrolling behavior of the large title text.</p>
+    </div>
+  </div>
+
+  <script>
+    // ── Clock ──
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('clock').textContent = `${h}:${m}:${s}`;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // ── Scroll: shrink title to top-right ──
+    (function () {
+      const title = document.getElementById('bigTitle');
+      const wrapper = document.getElementById('titleWrapper');
+      let ticking = false;
+
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            const wrapperRect = wrapper.getBoundingClientRect();
+            const isStuck = wrapperRect.top <= 0;
+            if (isStuck) {
+              title.classList.add('scrolled');
+            } else {
+              title.classList.remove('scrolled');
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+    })();
+
+    // ── ASCII "DB" with "DENNIS BAKHUIS" scrolling left-to-right per row ──
+    (function () {
+      const canvas = document.getElementById('ascii');
+      const asciiRows = 40;
+      const gap = 6;
+      const speed = 6; // columns per second scrolling right
+      const stepInterval = 1000 / speed;
+      const baseWord = 'DENNIS BAKHUIS';
+
+      // Build per-row word strings with random-length spacing around the name
+      function makeRowWord(seed) {
+        let s = seed;
+        function rand() { s = (s * 1664525 + 1013904223) >>> 0; return s; }
+        const before = 1 + (rand() % 5);
+        const after = 1 + (rand() % 5);
+        return ' '.repeat(before) + baseWord + ' '.repeat(after);
+      }
+
+      // Rasterize a single letter into a boolean grid
+      function rasterize(letter, cols, rows) {
+        const off = document.createElement('canvas');
+        const c = off.getContext('2d');
+        const fs = 340;
+        c.font = `bold ${fs}px Arial, sans-serif`;
+        const m = c.measureText(letter);
+        off.width = Math.ceil(m.width) + 30;
+        off.height = fs + 50;
+        c.font = `bold ${fs}px Arial, sans-serif`;
+        c.fillStyle = 'white';
+        c.fillText(letter, 15, fs + 5);
+        const img = c.getImageData(0, 0, off.width, off.height);
+        const px = img.data;
+        const cw = off.width / cols;
+        const ch = off.height / rows;
+        const shape = [];
+        for (let r = 0; r < rows; r++) {
+          shape[r] = [];
+          for (let cl = 0; cl < cols; cl++) {
+            const x = Math.floor(cl * cw + cw / 2);
+            const y = Math.floor(r * ch + ch / 2);
+            const idx = (y * off.width + x) * 4;
+            shape[r][cl] = px[idx + 3] > 128;
+          }
+        }
+        return shape;
+      }
+
+      const dCols = 38;
+      const bCols = 38;
+      const totalCols = dCols + gap + bCols;
+
+      const dShape = rasterize('D', dCols, asciiRows);
+      const bShape = rasterize('B', bCols, asciiRows);
+
+      // Combine into one unified shape grid
+      const shape = [];
+      for (let r = 0; r < asciiRows; r++) {
+        shape[r] = [];
+        for (let x = 0; x < totalCols; x++) {
+          if (x < dCols) {
+            shape[r][x] = dShape[r][x];
+          } else if (x >= dCols + gap) {
+            shape[r][x] = bShape[r][x - dCols - gap];
+          } else {
+            shape[r][x] = false;
+          }
+        }
+      }
+
+      // Per-row: random word (with varying spacing) + random start offset
+      const rowWord = [];
+      const rowOffset = [];
+      for (let r = 0; r < asciiRows; r++) {
+        const seed = ((r * 2654435761) >>> 0);
+        rowWord[r] = makeRowWord(seed);
+        rowOffset[r] = seed % rowWord[r].length;
+      }
+
+      let mouseOffsetX = 0, mouseOffsetY = 0;
+      let targetX = 0, targetY = 0;
+
+      document.addEventListener('mousemove', (e) => {
+        targetX = (e.clientX / window.innerWidth - 0.5) * 2.5;
+        targetY = (e.clientY / window.innerHeight - 0.5) * 2.5;
+      });
+
+      let stepCount = 0;
+      let lastStepTime = 0;
+
+      function render(now) {
+        mouseOffsetX += (targetX - mouseOffsetX) * 0.04;
+        mouseOffsetY += (targetY - mouseOffsetY) * 0.04;
+
+        if (now - lastStepTime >= stepInterval) {
+          const steps = Math.floor((now - lastStepTime) / stepInterval);
+          stepCount += steps;
+          lastStepTime += steps * stepInterval;
+        }
+
+        let grid = [];
+
+        for (let y = 0; y < asciiRows; y++) {
+          let row = '';
+          const srcY = Math.round(y - mouseOffsetY);
+
+          // Count filled cells on this row to map word across the full width
+          let filledPositions = [];
+          for (let x = 0; x < totalCols; x++) {
+            const srcX = Math.round(x - mouseOffsetX);
+            const inShape = srcY >= 0 && srcY < asciiRows &&
+                            srcX >= 0 && srcX < totalCols &&
+                            shape[srcY][srcX];
+            filledPositions.push(inShape);
+          }
+
+          // Build a running index of filled cells left-to-right
+          let filledIdx = 0;
+          for (let x = 0; x < totalCols; x++) {
+            if (!filledPositions[x]) {
+              row += ' ';
+              continue;
+            }
+
+            const rw = rowWord[y];
+            const rwLen = rw.length;
+            const charPos = (filledIdx + rowOffset[y] - stepCount % rwLen + rwLen * 100) % rwLen;
+            const ch = rw[charPos];
+
+            // Spaces in the word become blanks — creates the random gaps
+            row += ch;
+            filledIdx++;
+          }
+
+          grid.push(row);
+        }
+
+        canvas.textContent = grid.join('\n');
+        requestAnimationFrame(render);
+      }
+
+      lastStepTime = performance.now();
+      requestAnimationFrame(render);
+    })();
+  </script>
+
+</body>
+</html>
