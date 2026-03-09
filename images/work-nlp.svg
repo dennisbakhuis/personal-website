@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect fill="#2a2a2a" width="800" height="500"/>
+  <g opacity="0.12">
+    <rect x="80" y="150" width="120" height="24" rx="12" fill="#09f"/>
+    <rect x="80" y="190" width="160" height="24" rx="12" fill="#09f"/>
+    <rect x="80" y="230" width="100" height="24" rx="12" fill="#09f"/>
+    <rect x="80" y="270" width="140" height="24" rx="12" fill="#09f"/>
+    <rect x="350" y="160" width="100" height="100" rx="8" fill="#333"/>
+    <rect x="360" y="170" width="80" height="10" rx="2" fill="#555"/>
+    <rect x="360" y="190" width="60" height="10" rx="2" fill="#555"/>
+    <rect x="360" y="210" width="70" height="10" rx="2" fill="#555"/>
+    <line x1="450" y1="210" x2="560" y2="180" stroke="#555" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <line x1="450" y1="210" x2="560" y2="240" stroke="#555" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <line x1="450" y1="210" x2="560" y2="300" stroke="#555" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <rect x="560" y="168" width="160" height="28" rx="14" fill="#7ec87e" opacity="0.8"/>
+    <rect x="560" y="228" width="160" height="28" rx="14" fill="#09f" opacity="0.8"/>
+    <rect x="560" y="288" width="160" height="28" rx="14" fill="#fa0" opacity="0.8"/>
+  </g>
+  <text x="400" y="400" font-family="Inter, sans-serif" font-size="14" fill="#555" text-anchor="middle" letter-spacing="0.1em">DOCUMENT CLASSIFICATION</text>
+</svg>

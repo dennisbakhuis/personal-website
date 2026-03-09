@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect fill="#2a2a2a" width="800" height="500"/>
+  <g opacity="0.12">
+    <rect x="120" y="120" width="560" height="36" rx="4" fill="#333"/>
+    <rect x="120" y="170" width="560" height="36" rx="4" fill="#333"/>
+    <rect x="120" y="220" width="560" height="36" rx="4" fill="#333"/>
+    <rect x="120" y="270" width="560" height="36" rx="4" fill="#333"/>
+    <rect x="120" y="320" width="560" height="36" rx="4" fill="#333"/>
+    <circle cx="660" cy="138" r="10" fill="#7ec87e"/>
+    <circle cx="660" cy="188" r="10" fill="#7ec87e"/>
+    <circle cx="660" cy="238" r="10" fill="#f44"/>
+    <circle cx="660" cy="288" r="10" fill="#7ec87e"/>
+    <circle cx="660" cy="338" r="10" fill="#fa0"/>
+  </g>
+  <text x="400" y="420" font-family="Inter, sans-serif" font-size="14" fill="#555" text-anchor="middle" letter-spacing="0.1em">DATA QUALITY</text>
+</svg>
