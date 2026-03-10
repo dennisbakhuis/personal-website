@@ -152,7 +152,7 @@
     }
 
     .floating-name .fn-line {
-      display: block;
+      display: inline-block;
       white-space: nowrap;
     }
 
@@ -1088,7 +1088,7 @@
 
         // Line2: stacked (two lines) → inline (one line)
         var line1W = navLine1W * (fs / 18);
-        var spaceW = fs * 0.08;
+        var spaceW = fs * 0.18;
         var currentLH = fs * lh;
         line2.style.transform = 'translate(' + (t * (line1W + spaceW)) + 'px,' + (-t * currentLH) + 'px)';
       }
