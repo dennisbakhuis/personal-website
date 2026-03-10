@@ -1001,6 +1001,16 @@
 
   <!-- ── Scripts ── -->
   <script>
+    // Remove intro overlay after animation finishes (prevents replays on hot-reload)
+    (function() {
+      var intro = document.querySelector('.intro');
+      if (intro) {
+        intro.addEventListener('animationend', function() {
+          intro.remove();
+        });
+      }
+    })();
+
     // Clock
     function tick() {
       const now = new Date();
