@@ -1072,13 +1072,13 @@
       function update() {
         if (!active) return;
         var scrollY = window.scrollY;
-        var raw = Math.min(Math.max(scrollY / (heroH * 1.4), 0), 1);
-        var t = 1 - Math.pow(1 - raw, 3); // ease-out cubic
+        var raw = Math.min(Math.max(scrollY / (heroH * 2.0), 0), 1);
+        var t = raw * raw * (3 - 2 * raw); // smoothstep ease-in-out
 
         // Position
         var naturalY = heroStartY - scrollY;
         var x = lerp(heroStartX, navEndX, t);
-        var y = lerp(naturalY, navEndY, t);
+        var y = Math.max(lerp(naturalY, navEndY, t), navEndY);
         var fs = lerp(heroFS, 13, t);
         var lh = lerp(0.88, 1.2, t);
 
