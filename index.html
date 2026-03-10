@@ -264,6 +264,8 @@
       color: #fff;
       font-size: 1.385em;
       font-family: 'Inter', sans-serif;
+      letter-spacing: -0.01em;
+      word-spacing: -0.15em;
     }
 
     .page-nav .nav-links { display: flex; gap: 28px; }
@@ -1086,7 +1088,7 @@
 
         // Line2: stacked (two lines) → inline (one line)
         var line1W = navLine1W * (fs / 18);
-        var spaceW = fs * 0.12;
+        var spaceW = fs * 0.08;
         var currentLH = fs * lh;
         line2.style.transform = 'translate(' + (t * (line1W + spaceW)) + 'px,' + (-t * currentLH) + 'px)';
       }
