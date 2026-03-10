@@ -20,12 +20,12 @@ Everything you need to provide to fill in the website. Placeholder content is cu
 
 | Field | What to provide |
 |-------|----------------|
-| Headline | Currently: "Crafting systems that make data *useful*" — rewrite or keep |
+| Headline | "From physics PhD to making data *useful*" |
 | Portrait photo | Currently reuses `bg1.jpg` — provide a dedicated headshot |
-| Bio paragraph 1 | Who you are, where you're based, what you do |
-| Bio paragraph 2 | Your focus areas and what you care about |
-| Bio paragraph 3 | Personal touch (learning, TIL, side projects) |
-| Skill tags | Currently: Python, SQL, Machine Learning, Data Engineering, MLOps, dbt, Spark, Docker — add/remove as needed (consider: GenAI, LLMs, PyTorch, Pandas, Airflow, etc.) |
+| Bio paragraph 1 | Data Scientist & Engineer at TenneT, PhD in Physics from University of Twente (turbulence/fluid dynamics) |
+| Bio paragraph 2 | 15+ years Python, end-to-end ML systems, exploring Rust, open-source (pigeonXT), "Python 10 Minutes a Day" series on TDS |
+| Bio paragraph 3 | Shares learnings on NLP, data engineering, Python, AI — clean code and reproducible pipelines advocate |
+| Skill tags | Python, NLP, Machine Learning, Data Engineering, Deep Learning, Rust, Docker, MLOps, Open Source |
 
 ---
 
