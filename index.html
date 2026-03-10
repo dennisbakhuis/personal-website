@@ -129,11 +129,26 @@
       to { transform: translateX(0); }
     }
 
-    /* Portrait: tri-pane slides from right to left */
+    /* Portrait: horizontal strips sliding from right to left */
     @media (orientation: portrait) {
-      .strip {
-        transform: translateX(300%);
+      .strips {
+        flex-direction: column;
       }
+      .strip {
+        flex: 1;
+        width: 100%;
+        height: auto;
+        transform: translateX(100%);
+      }
+      .strip-img {
+        width: 100%;
+        height: 300%;
+        top: 0;
+        left: 0 !important;
+      }
+      .strip:nth-child(1) .strip-img { top: 0; }
+      .strip:nth-child(2) .strip-img { top: -100%; }
+      .strip:nth-child(3) .strip-img { top: -200%; }
       .strip:nth-child(1) { animation-name: stripRight; }
       .strip:nth-child(2) { animation-name: stripRight; }
       .strip:nth-child(3) { animation-name: stripRight; }
@@ -248,16 +263,6 @@
       margin-bottom: 6px;
     }
 
-    .hero-dot {
-      position: absolute;
-      right: 14%; top: 44%;
-      width: 9px; height: 9px;
-      border-radius: 50%;
-      background: var(--text);
-      z-index: 3;
-      opacity: 0;
-      animation: fadeIn 0.8s ease 2.2s forwards;
-    }
 
     /* ─────────────────────────────────────────
        PAGE
@@ -751,7 +756,6 @@
       .hero-inner { padding: 20px 24px 40px; }
       .hero-name  { font-size: clamp(52px, 14vw, 100px); }
       .hero-tagline { display: none; }
-      .hero-dot { display: none; }
       .status-avail { display: none; }
 
       section { padding: 80px 24px; }
@@ -795,7 +799,6 @@
       </div>
     </div>
 
-    <div class="hero-dot"></div>
   </div>
 
   <!-- ── Floating name for scroll transition ── -->
