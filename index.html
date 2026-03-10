@@ -202,11 +202,11 @@
 
     /* ── Status bar ── */
     .status-bar {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
+      display: flex;
+      justify-content: space-between;
       align-items: flex-start;
       font-size: 13px;
-      color: var(--dim);
+      color: #ddd;
       font-weight: 400;
       line-height: 1.5;
     }
@@ -215,14 +215,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      justify-self: center;
       white-space: nowrap;
-    }
-
-    .status-time {
-      justify-self: end;
-      font-family: 'Inter', monospace;
-      font-variant-numeric: tabular-nums;
     }
 
     .dot {
@@ -757,7 +750,6 @@
       .hero-inner { padding: 20px 24px 40px; }
       .hero-name  { font-size: clamp(52px, 14vw, 100px); }
       .hero-tagline { display: none; }
-      .status-avail { display: none; }
 
       section { padding: 80px 24px; }
       .cta-section { padding: 80px 24px; }
@@ -791,7 +783,6 @@
       <div class="status-bar">
         <span class="status-role">Data Scientist &amp;<br>Engineer</span>
         <span class="status-avail"><span class="dot"></span>Available for projects</span>
-        <span class="status-time">Netherlands · <span id="clock">--:--</span></span>
       </div>
 
       <div class="hero-bottom">
@@ -1037,15 +1028,6 @@
     })();
 
     // Clock
-    function tick() {
-      const now = new Date();
-      const nl = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Amsterdam' }));
-      const h = String(nl.getHours()).padStart(2, '0');
-      const m = String(nl.getMinutes()).padStart(2, '0');
-      document.getElementById('clock').textContent = h + ':' + m;
-    }
-    tick();
-    setInterval(tick, 15000);
 
     // Scroll reveal
     const observer = new IntersectionObserver((entries) => {
