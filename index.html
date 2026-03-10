@@ -268,7 +268,8 @@
 
     .page-nav .nav-name {
       font-weight: 500;
-      color: #bbb;
+      color: #fff;
+      font-size: 15px;
       font-family: 'Inter', sans-serif;
     }
 
@@ -1054,8 +1055,8 @@
         navEndX = parseFloat(navCS.paddingLeft);
         navEndY = parseFloat(navCS.paddingTop);
 
-        // Measure line1 width at nav font size (13px)
-        floating.style.fontSize = '13px';
+        // Measure line1 width at nav font size (15px)
+        floating.style.fontSize = '15px';
         navLine1W = line1.offsetWidth;
         floating.style.fontSize = heroFS + 'px';
       }
@@ -1072,14 +1073,14 @@
       function update() {
         if (!active) return;
         var scrollY = window.scrollY;
-        var raw = Math.min(Math.max(scrollY / (heroH * 2.0), 0), 1);
+        var raw = Math.min(Math.max(scrollY / heroH, 0), 1);
         var t = raw * raw * (3 - 2 * raw); // smoothstep ease-in-out
 
         // Position
         var naturalY = heroStartY - scrollY;
         var x = lerp(heroStartX, navEndX, t);
         var y = Math.max(lerp(naturalY, navEndY, t), navEndY);
-        var fs = lerp(heroFS, 13, t);
+        var fs = lerp(heroFS, 15, t);
         var lh = lerp(0.88, 1.2, t);
 
         floating.style.transform = 'translate(' + x + 'px,' + y + 'px)';
@@ -1087,12 +1088,11 @@
         floating.style.lineHeight = lh;
         floating.style.fontWeight = Math.round(lerp(400, 500, t));
 
-        // Color: #fff → #bbb
-        var c = Math.round(lerp(255, 187, t));
-        floating.style.color = 'rgb(' + c + ',' + c + ',' + c + ')';
+        // Color stays white throughout
+        floating.style.color = '#fff';
 
         // Line2: stacked (two lines) → inline (one line)
-        var line1W = navLine1W * (fs / 13);
+        var line1W = navLine1W * (fs / 15);
         var spaceW = fs * 0.18;
         var currentLH = fs * lh;
         line2.style.transform = 'translate(' + (t * (line1W + spaceW)) + 'px,' + (-t * currentLH) + 'px)';
