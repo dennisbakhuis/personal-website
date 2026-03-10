@@ -268,12 +268,12 @@
 
     .page-nav .nav-name {
       font-weight: 500;
-      color: var(--dim);
+      color: #bbb;
       font-family: 'Inter', sans-serif;
     }
 
     .page-nav .nav-links { display: flex; gap: 28px; }
-    .page-nav a { color: var(--muted); transition: color 0.2s; }
+    .page-nav a { color: #aaa; transition: color 0.2s; }
     .page-nav a:hover { color: var(--text); }
 
     /* ── Divider ── */
@@ -1072,7 +1072,7 @@
       function update() {
         if (!active) return;
         var scrollY = window.scrollY;
-        var raw = Math.min(Math.max(scrollY / heroH, 0), 1);
+        var raw = Math.min(Math.max(scrollY / (heroH * 1.4), 0), 1);
         var t = 1 - Math.pow(1 - raw, 3); // ease-out cubic
 
         // Position
@@ -1087,13 +1087,13 @@
         floating.style.lineHeight = lh;
         floating.style.fontWeight = Math.round(lerp(400, 500, t));
 
-        // Color: #fff → #999
-        var c = Math.round(lerp(255, 153, t));
+        // Color: #fff → #bbb
+        var c = Math.round(lerp(255, 187, t));
         floating.style.color = 'rgb(' + c + ',' + c + ',' + c + ')';
 
         // Line2: stacked (two lines) → inline (one line)
         var line1W = navLine1W * (fs / 13);
-        var spaceW = fs * 0.27;
+        var spaceW = fs * 0.18;
         var currentLH = fs * lh;
         line2.style.transform = 'translate(' + (t * (line1W + spaceW)) + 'px,' + (-t * currentLH) + 'px)';
       }
