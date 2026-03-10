@@ -98,11 +98,12 @@
     .strip:nth-child(2) .strip-img { left: -100%; }
     .strip:nth-child(3) .strip-img { left: -200%; }
 
-    .strip::after {
+    .strips::after {
       content: '';
       position: absolute;
       inset: 0;
       z-index: 1;
+      pointer-events: none;
       background: linear-gradient(
         to bottom,
         rgba(0, 0, 0, 0.5) 0%,
