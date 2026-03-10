@@ -102,16 +102,12 @@
     .strip:nth-child(1) {
       background-position: left center;
       background-size: 300% auto;
-      border-right: 1px solid rgba(255,255,255,0.08);
-      animation: stripUp 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards,
-                 borderFade 0.4s ease 2.5s forwards;
+      animation: stripUp 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
     }
     .strip:nth-child(2) {
       background-position: center center;
       background-size: 300% auto;
-      border-right: 1px solid rgba(255,255,255,0.08);
-      animation: stripUp 1.1s cubic-bezier(0.16, 1, 0.3, 1) 1.15s forwards,
-                 borderFade 0.4s ease 2.5s forwards;
+      animation: stripUp 1.1s cubic-bezier(0.16, 1, 0.3, 1) 1.15s forwards;
     }
     .strip:nth-child(3) {
       background-position: right center;
@@ -121,9 +117,6 @@
 
     @keyframes stripUp {
       to { transform: translateY(0); }
-    }
-    @keyframes borderFade {
-      to { border-right-color: transparent; }
     }
 
     .hero-inner {
@@ -269,7 +262,7 @@
     .page-nav .nav-name {
       font-weight: 500;
       color: #fff;
-      font-size: 15px;
+      font-size: 1.385em;
       font-family: 'Inter', sans-serif;
     }
 
@@ -1055,8 +1048,8 @@
         navEndX = parseFloat(navCS.paddingLeft);
         navEndY = parseFloat(navCS.paddingTop);
 
-        // Measure line1 width at nav font size (15px)
-        floating.style.fontSize = '15px';
+        // Measure line1 width at nav font size (18px)
+        floating.style.fontSize = '18px';
         navLine1W = line1.offsetWidth;
         floating.style.fontSize = heroFS + 'px';
       }
@@ -1080,7 +1073,7 @@
         var naturalY = heroStartY - scrollY;
         var x = lerp(heroStartX, navEndX, t);
         var y = Math.max(lerp(naturalY, navEndY, t), navEndY);
-        var fs = lerp(heroFS, 15, t);
+        var fs = lerp(heroFS, 18, t);
         var lh = lerp(0.88, 1.2, t);
 
         floating.style.transform = 'translate(' + x + 'px,' + y + 'px)';
@@ -1092,8 +1085,8 @@
         floating.style.color = '#fff';
 
         // Line2: stacked (two lines) → inline (one line)
-        var line1W = navLine1W * (fs / 15);
-        var spaceW = fs * 0.18;
+        var line1W = navLine1W * (fs / 18);
+        var spaceW = fs * 0.12;
         var currentLH = fs * lh;
         line2.style.transform = 'translate(' + (t * (line1W + spaceW)) + 'px,' + (-t * currentLH) + 'px)';
       }
