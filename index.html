@@ -142,6 +142,35 @@
       to { opacity: 1; }
     }
 
+    /* ── Floating name (scroll transition) ── */
+    .floating-name {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 200;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      pointer-events: none;
+      transform-origin: top left;
+      will-change: transform;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 2.1s forwards;
+    }
+
+    .floating-name .fn-line {
+      display: block;
+      white-space: nowrap;
+    }
+
+    body.fn-active .hero-name {
+      visibility: hidden;
+    }
+
+    body.fn-active .nav-name {
+      visibility: hidden;
+    }
+
     /* ── Status bar ── */
     .status-bar {
       display: grid;
@@ -754,6 +783,12 @@
     <div class="hero-dot"></div>
   </div>
 
+  <!-- ── Floating name for scroll transition ── -->
+  <div class="floating-name">
+    <span class="fn-line fn-line1">Dennis</span>
+    <span class="fn-line fn-line2">Bakhuis</span>
+  </div>
+
   <!-- ── Page content ── -->
   <div class="page">
 
@@ -993,6 +1028,98 @@
     }, { threshold: 0.1 });
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Floating name scroll transition
+    (function() {
+      var floating = document.querySelector('.floating-name');
+      var line1 = floating.querySelector('.fn-line1');
+      var line2 = floating.querySelector('.fn-line2');
+      var heroName = document.querySelector('.hero-name');
+      var hero = document.querySelector('.hero');
+      var pageNav = document.querySelector('.page-nav');
+
+      var heroStartX, heroStartY, heroFS, navEndX, navEndY;
+      var navLine1W, heroH;
+      var ticking = false, active = false;
+
+      function measure() {
+        var scroll = window.scrollY;
+        var hRect = heroName.getBoundingClientRect();
+        heroStartX = hRect.left;
+        heroStartY = hRect.top + scroll;
+        heroFS = parseFloat(getComputedStyle(heroName).fontSize);
+        heroH = hero.offsetHeight;
+
+        var navCS = getComputedStyle(pageNav);
+        navEndX = parseFloat(navCS.paddingLeft);
+        navEndY = parseFloat(navCS.paddingTop);
+
+        // Measure line1 width at nav font size (13px)
+        floating.style.fontSize = '13px';
+        navLine1W = line1.offsetWidth;
+        floating.style.fontSize = heroFS + 'px';
+      }
+
+      function init() {
+        measure();
+        document.body.classList.add('fn-active');
+        active = true;
+        update();
+      }
+
+      function lerp(a, b, t) { return a + (b - a) * t; }
+
+      function update() {
+        if (!active) return;
+        var scrollY = window.scrollY;
+        var raw = Math.min(Math.max(scrollY / heroH, 0), 1);
+        var t = 1 - Math.pow(1 - raw, 3); // ease-out cubic
+
+        // Position
+        var naturalY = heroStartY - scrollY;
+        var x = lerp(heroStartX, navEndX, t);
+        var y = lerp(naturalY, navEndY, t);
+        var fs = lerp(heroFS, 13, t);
+        var lh = lerp(0.88, 1.2, t);
+
+        floating.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+        floating.style.fontSize = fs + 'px';
+        floating.style.lineHeight = lh;
+        floating.style.fontWeight = Math.round(lerp(400, 500, t));
+
+        // Color: #fff → #999
+        var c = Math.round(lerp(255, 153, t));
+        floating.style.color = 'rgb(' + c + ',' + c + ',' + c + ')';
+
+        // Line2: stacked (two lines) → inline (one line)
+        var line1W = navLine1W * (fs / 13);
+        var spaceW = fs * 0.27;
+        var currentLH = fs * lh;
+        line2.style.transform = 'translate(' + (t * (line1W + spaceW)) + 'px,' + (-t * currentLH) + 'px)';
+      }
+
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          requestAnimationFrame(function() {
+            update();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+
+      var resizeTimer;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+          measure();
+          update();
+        }, 150);
+      });
+
+      // Init when hero-inner starts fading in (matches fadeIn animation timing)
+      setTimeout(init, 2100);
+    })();
   </script>
 
 </body>
