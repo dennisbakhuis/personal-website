@@ -177,7 +177,8 @@
       top: 0;
       left: 0;
       z-index: 200;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Lato', sans-serif;
+      font-weight: 900;
       letter-spacing: -0.03em;
       color: var(--text);
       pointer-events: none;
@@ -1212,8 +1213,13 @@
       var fn = document.querySelector('.floating-name');
       function sparkle() {
         var rect = fn.getBoundingClientRect();
-        if (rect.width === 0) return;          // not visible
-        var count = 5 + Math.floor(Math.random() * 4); // 5-8 particles
+        if (rect.width === 0) return;
+        // Determine if name is large (hero) or small (nav)
+        var isLarge = rect.height > 60;
+        var count = isLarge ? (6 + Math.floor(Math.random() * 5)) : (3 + Math.floor(Math.random() * 2));
+        var baseSize = isLarge ? 5 : 2;
+        var sizeRange = isLarge ? 6 : 2;
+        var particleOpacity = isLarge ? 0.9 : 0.4;
         for (var i = 0; i < count; i++) {
           (function(delay) {
             setTimeout(function() {
@@ -1222,17 +1228,19 @@
               p.style.left = (rect.left + Math.random() * rect.width) + 'px';
               p.style.top  = (rect.top  + Math.random() * rect.height) + 'px';
               p.style.position = 'fixed';
-              var size = 3 + Math.random() * 4;
+              var size = baseSize + Math.random() * sizeRange;
               p.style.width  = size + 'px';
               p.style.height = size + 'px';
+              p.style.opacity = particleOpacity;
               document.body.appendChild(p);
-              // trigger animation
               requestAnimationFrame(function() { p.classList.add('active'); });
               setTimeout(function() { p.remove(); }, 700);
             }, delay);
-          })(i * 80 + Math.random() * 60);
+          })(i * 100 + Math.random() * 80);
         }
       }
+      // First sparkle after intro animation finishes
+      setTimeout(sparkle, 3000);
       setInterval(sparkle, 15000);
     })();
   </script>
