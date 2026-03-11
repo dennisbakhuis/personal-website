@@ -201,47 +201,36 @@
       visibility: hidden;
     }
 
-    /* ── Sparkle effect ── */
-    @keyframes sparkle {
-      0%   { opacity: 0; transform: scale(0) rotate(0deg); }
-      50%  { opacity: 1; transform: scale(1) rotate(180deg); }
-      100% { opacity: 0; transform: scale(0) rotate(360deg); }
+    /* ── Flash/glint effect ── */
+    @keyframes glint-sweep {
+      0%   { left: -8%; opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { left: 108%; opacity: 0; }
     }
 
-    .sparkle-particle {
+    .glint-line {
       position: absolute;
-      width: 4px;
-      height: 4px;
+      top: 0;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent 0%, #f5c542 20%, #ffe066 50%, #f5c542 80%, transparent 100%);
+      border-radius: 2px;
       pointer-events: none;
       z-index: 201;
+      opacity: 0;
+      filter: blur(0.5px);
+      box-shadow: 0 0 6px 1px rgba(245, 197, 66, 0.4);
     }
 
-    .sparkle-particle::before,
-    .sparkle-particle::after {
-      content: '';
-      position: absolute;
-      background: var(--text);
-      border-radius: 1px;
+    .glint-line.active {
+      animation: glint-sweep 0.6s ease-in-out forwards;
     }
 
-    .sparkle-particle::before {
-      width: 100%;
-      height: 1px;
-      top: 50%;
-      left: 0;
-      transform: translateY(-50%);
-    }
-
-    .sparkle-particle::after {
-      width: 1px;
-      height: 100%;
-      left: 50%;
-      top: 0;
-      transform: translateX(-50%);
-    }
-
-    .sparkle-particle.active {
-      animation: sparkle 0.6s ease-out forwards;
+    .glint-line.small {
+      width: 2px;
+      filter: blur(0.3px);
+      box-shadow: 0 0 3px 1px rgba(245, 197, 66, 0.25);
     }
 
     /* ── Status bar ── */
@@ -1208,40 +1197,39 @@
       setTimeout(init, 2100);
     })();
 
-    // ── Sparkle effect on floating name ──
+    // ── Flash/glint effect on floating name ──
     (function() {
       var fn = document.querySelector('.floating-name');
-      function sparkle() {
+      function glint() {
         var rect = fn.getBoundingClientRect();
         if (rect.width === 0) return;
-        // Determine if name is large (hero) or small (nav)
         var isLarge = rect.height > 60;
-        var count = isLarge ? (6 + Math.floor(Math.random() * 5)) : (3 + Math.floor(Math.random() * 2));
-        var baseSize = isLarge ? 5 : 2;
-        var sizeRange = isLarge ? 6 : 2;
-        var particleOpacity = isLarge ? 0.9 : 0.4;
-        for (var i = 0; i < count; i++) {
-          (function(delay) {
-            setTimeout(function() {
-              var p = document.createElement('div');
-              p.className = 'sparkle-particle';
-              p.style.left = (rect.left + Math.random() * rect.width) + 'px';
-              p.style.top  = (rect.top  + Math.random() * rect.height) + 'px';
-              p.style.position = 'fixed';
-              var size = baseSize + Math.random() * sizeRange;
-              p.style.width  = size + 'px';
-              p.style.height = size + 'px';
-              p.style.opacity = particleOpacity;
-              document.body.appendChild(p);
-              requestAnimationFrame(function() { p.classList.add('active'); });
-              setTimeout(function() { p.remove(); }, 700);
-            }, delay);
-          })(i * 100 + Math.random() * 80);
-        }
+        var line = document.createElement('div');
+        line.className = 'glint-line' + (isLarge ? '' : ' small');
+        line.style.position = 'fixed';
+        line.style.top = rect.top + 'px';
+        line.style.height = rect.height + 'px';
+        line.style.left = (rect.left - 10) + 'px';
+        // Override animation to sweep across the actual text width
+        var dist = rect.width + 20;
+        line.style.setProperty('--sweep-dist', dist + 'px');
+        line.style.animation = 'none';
+        document.body.appendChild(line);
+        // Custom keyframes scoped to current size
+        line.style.left = (rect.left - 10) + 'px';
+        line.animate([
+          { left: (rect.left - 10) + 'px', opacity: 0 },
+          { left: (rect.left + rect.width * 0.05) + 'px', opacity: isLarge ? 1 : 0.5, offset: 0.1 },
+          { left: (rect.left + rect.width * 0.95) + 'px', opacity: isLarge ? 1 : 0.5, offset: 0.9 },
+          { left: (rect.left + rect.width + 10) + 'px', opacity: 0 }
+        ], {
+          duration: isLarge ? 600 : 400,
+          easing: 'ease-in-out',
+          fill: 'forwards'
+        }).onfinish = function() { line.remove(); };
       }
-      // First sparkle after intro animation finishes
-      setTimeout(sparkle, 3000);
-      setInterval(sparkle, 15000);
+      setTimeout(glint, 3000);
+      setInterval(glint, 15000);
     })();
   </script>
 
