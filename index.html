@@ -1092,8 +1092,10 @@
 
         var navNameEl = pageNav.querySelector('.nav-name');
         var navNameRect = navNameEl.getBoundingClientRect();
+        var navRect = pageNav.getBoundingClientRect();
         navEndX = navNameRect.left;
-        navEndY = navNameRect.top;
+        // Offset of nav-name within the nav — this is the correct Y when nav is sticky at top=0
+        navEndY = navNameRect.top - navRect.top;
 
         // Measure line1 text width at nav font size (18px)
         // Temporarily use inline so offsetWidth reflects actual text, not container
