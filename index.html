@@ -201,36 +201,18 @@
       visibility: hidden;
     }
 
-    /* ── Flash/glint effect ── */
-    @keyframes glint-sweep {
-      0%   { left: -8%; opacity: 0; }
-      10%  { opacity: 1; }
-      90%  { opacity: 1; }
-      100% { left: 108%; opacity: 0; }
+    /* ── Flash/glint effect (text-clipped sweep) ── */
+    .floating-name.glinting,
+    .floating-name.glinting .fn-line {
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .glint-line {
-      position: absolute;
-      top: 0;
-      width: 3px;
-      height: 100%;
-      background: linear-gradient(to bottom, transparent 0%, #f5c542 20%, #ffe066 50%, #f5c542 80%, transparent 100%);
-      border-radius: 2px;
-      pointer-events: none;
-      z-index: 201;
-      opacity: 0;
-      filter: blur(0.5px);
-      box-shadow: 0 0 6px 1px rgba(245, 197, 66, 0.4);
-    }
-
-    .glint-line.active {
-      animation: glint-sweep 0.6s ease-in-out forwards;
-    }
-
-    .glint-line.small {
-      width: 2px;
-      filter: blur(0.3px);
-      box-shadow: 0 0 3px 1px rgba(245, 197, 66, 0.25);
+    .floating-name.glinting .fn-line {
+      background: inherit;
+      background-clip: text;
+      -webkit-background-clip: text;
     }
 
     /* ── Status bar ── */
@@ -1197,36 +1179,48 @@
       setTimeout(init, 2100);
     })();
 
-    // ── Flash/glint effect on floating name ──
+    // ── Flash/glint effect on floating name (text-clipped) ──
     (function() {
       var fn = document.querySelector('.floating-name');
+      var textColor = '#fff';
+      var shadowColor = 'rgba(255,255,255,0.35)';
+
       function glint() {
-        var rect = fn.getBoundingClientRect();
-        if (rect.width === 0) return;
-        var isLarge = rect.height > 60;
-        var line = document.createElement('div');
-        line.className = 'glint-line' + (isLarge ? '' : ' small');
-        line.style.position = 'fixed';
-        line.style.top = rect.top + 'px';
-        line.style.height = rect.height + 'px';
-        line.style.left = (rect.left - 10) + 'px';
-        // Override animation to sweep across the actual text width
-        var dist = rect.width + 20;
-        line.style.setProperty('--sweep-dist', dist + 'px');
-        line.style.animation = 'none';
-        document.body.appendChild(line);
-        // Custom keyframes scoped to current size
-        line.style.left = (rect.left - 10) + 'px';
-        line.animate([
-          { left: (rect.left - 10) + 'px', opacity: 0 },
-          { left: (rect.left + rect.width * 0.05) + 'px', opacity: isLarge ? 1 : 0.5, offset: 0.1 },
-          { left: (rect.left + rect.width * 0.95) + 'px', opacity: isLarge ? 1 : 0.5, offset: 0.9 },
-          { left: (rect.left + rect.width + 10) + 'px', opacity: 0 }
-        ], {
-          duration: isLarge ? 600 : 400,
-          easing: 'ease-in-out',
-          fill: 'forwards'
-        }).onfinish = function() { line.remove(); };
+        if (fn.getBoundingClientRect().width === 0) return;
+        var isLarge = fn.getBoundingClientRect().height > 60;
+        var duration = isLarge ? 600 : 400;
+        var bandWidth = isLarge ? 30 : 15;
+        var shadow = isLarge ? shadowColor : 'rgba(255,255,255,0.2)';
+
+        fn.classList.add('glinting');
+        // Animate a grey shadow band sweeping through the text via background-position
+        var start = performance.now();
+        function frame(now) {
+          var t = Math.min((now - start) / duration, 1);
+          // Ease in-out
+          var ease = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+          var pos = ease * 100;
+          var grad = 'linear-gradient(90deg, '
+            + textColor + ' 0%, '
+            + textColor + ' ' + (pos - bandWidth) + '%, '
+            + shadow + ' ' + pos + '%, '
+            + textColor + ' ' + (pos + bandWidth) + '%, '
+            + textColor + ' 100%)';
+          fn.style.backgroundImage = grad;
+          fn.querySelectorAll('.fn-line').forEach(function(el) {
+            el.style.backgroundImage = grad;
+          });
+          if (t < 1) {
+            requestAnimationFrame(frame);
+          } else {
+            fn.classList.remove('glinting');
+            fn.style.backgroundImage = '';
+            fn.querySelectorAll('.fn-line').forEach(function(el) {
+              el.style.backgroundImage = '';
+            });
+          }
+        }
+        requestAnimationFrame(frame);
       }
       setTimeout(glint, 3000);
       setInterval(glint, 15000);
