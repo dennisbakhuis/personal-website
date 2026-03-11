@@ -210,12 +210,12 @@
     .tittle-i::after {
       content: '';
       position: absolute;
-      /* Position over the tittle (dot) of the "i" */
-      top: 0.05em;
+      /* Sit exactly over the tittle dot */
+      top: 0.08em;
       left: 50%;
       transform: translateX(-50%);
-      width: 0.32em;
-      height: 0.32em;
+      width: 0.14em;
+      height: 0.14em;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0);
       pointer-events: none;
@@ -224,14 +224,13 @@
     }
 
     .tittle-i.flash::after {
-      animation: tittleFlash 0.6s ease-in-out forwards;
+      animation: tittleFlash 0.5s ease-in-out forwards;
     }
 
     @keyframes tittleFlash {
-      0%   { opacity: 0; background: rgba(255, 255, 255, 0); box-shadow: none; }
-      30%  { opacity: 1; background: rgba(255, 255, 255, 0.7); box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.5); }
-      60%  { opacity: 1; background: rgba(255, 255, 255, 0.4); box-shadow: 0 0 4px 1px rgba(255, 255, 255, 0.3); }
-      100% { opacity: 0; background: rgba(255, 255, 255, 0); box-shadow: none; }
+      0%   { opacity: 0; background: rgba(255, 255, 255, 0); }
+      35%  { opacity: 1; background: rgba(255, 255, 255, 0.55); }
+      100% { opacity: 0; background: rgba(255, 255, 255, 0); }
     }
 
     /* ── Status bar ── */
