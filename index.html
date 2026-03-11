@@ -201,18 +201,37 @@
       visibility: hidden;
     }
 
-    /* ── Flash/glint effect (text-clipped sweep) ── */
-    .floating-name.glinting,
-    .floating-name.glinting .fn-line {
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    /* ── Tittle (dot of "i") flash effect ── */
+    .tittle-i {
+      position: relative;
+      display: inline-block;
     }
 
-    .floating-name.glinting .fn-line {
-      background: inherit;
-      background-clip: text;
-      -webkit-background-clip: text;
+    .tittle-i::after {
+      content: '';
+      position: absolute;
+      /* Position over the tittle (dot) of the "i" */
+      top: 0.05em;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0.32em;
+      height: 0.32em;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0);
+      pointer-events: none;
+      opacity: 0;
+      transition: none;
+    }
+
+    .tittle-i.flash::after {
+      animation: tittleFlash 0.6s ease-in-out forwards;
+    }
+
+    @keyframes tittleFlash {
+      0%   { opacity: 0; background: rgba(255, 255, 255, 0); box-shadow: none; }
+      30%  { opacity: 1; background: rgba(255, 255, 255, 0.7); box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.5); }
+      60%  { opacity: 1; background: rgba(255, 255, 255, 0.4); box-shadow: 0 0 4px 1px rgba(255, 255, 255, 0.3); }
+      100% { opacity: 0; background: rgba(255, 255, 255, 0); box-shadow: none; }
     }
 
     /* ── Status bar ── */
@@ -824,8 +843,8 @@
 
   <!-- ── Floating name for scroll transition ── -->
   <div class="floating-name">
-    <span class="fn-line fn-line1">Dennis</span>
-    <span class="fn-line fn-line2">Bakhuis</span>
+    <span class="fn-line fn-line1">Denn<span class="tittle-i">i</span>s</span>
+    <span class="fn-line fn-line2">Bakhu<span class="tittle-i">i</span>s</span>
   </div>
 
   <!-- ── Page content ── -->
@@ -1179,51 +1198,27 @@
       setTimeout(init, 2100);
     })();
 
-    // ── Flash/glint effect on floating name (text-clipped) ──
+    // ── Tittle flash effect on the "i" dots ──
     (function() {
-      var fn = document.querySelector('.floating-name');
-      var textColor = '#fff';
-      var shadowColor = 'rgba(255,255,255,0.35)';
+      var tittles = document.querySelectorAll('.tittle-i');
 
-      function glint() {
-        if (fn.getBoundingClientRect().width === 0) return;
-        var isLarge = fn.getBoundingClientRect().height > 60;
-        var duration = isLarge ? 600 : 400;
-        var bandWidth = isLarge ? 30 : 15;
-        var shadow = isLarge ? shadowColor : 'rgba(255,255,255,0.2)';
-
-        fn.classList.add('glinting');
-        // Animate a grey shadow band sweeping through the text via background-position
-        var start = performance.now();
-        function frame(now) {
-          var t = Math.min((now - start) / duration, 1);
-          // Ease in-out
-          var ease = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-          var pos = ease * 100;
-          var grad = 'linear-gradient(90deg, '
-            + textColor + ' 0%, '
-            + textColor + ' ' + (pos - bandWidth) + '%, '
-            + shadow + ' ' + pos + '%, '
-            + textColor + ' ' + (pos + bandWidth) + '%, '
-            + textColor + ' 100%)';
-          fn.style.backgroundImage = grad;
-          fn.querySelectorAll('.fn-line').forEach(function(el) {
-            el.style.backgroundImage = grad;
-          });
-          if (t < 1) {
-            requestAnimationFrame(frame);
-          } else {
-            fn.classList.remove('glinting');
-            fn.style.backgroundImage = '';
-            fn.querySelectorAll('.fn-line').forEach(function(el) {
-              el.style.backgroundImage = '';
+      function flash() {
+        tittles.forEach(function(el, i) {
+          // Stagger the two i's slightly
+          setTimeout(function() {
+            el.classList.remove('flash');
+            // Force reflow to restart animation
+            void el.offsetWidth;
+            el.classList.add('flash');
+            el.addEventListener('animationend', function handler() {
+              el.classList.remove('flash');
+              el.removeEventListener('animationend', handler);
             });
-          }
-        }
-        requestAnimationFrame(frame);
+          }, i * 150);
+        });
       }
-      setTimeout(glint, 3000);
-      setInterval(glint, 15000);
+      setTimeout(flash, 3000);
+      setInterval(flash, 15000);
     })();
   </script>
 
