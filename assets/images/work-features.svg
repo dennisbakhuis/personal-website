@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect fill="#2a2a2a" width="800" height="500"/>
+  <g opacity="0.12">
+    <rect x="100" y="100" width="180" height="60" rx="6" fill="#09f"/>
+    <rect x="100" y="180" width="180" height="60" rx="6" fill="#09f"/>
+    <rect x="100" y="260" width="180" height="60" rx="6" fill="#09f"/>
+    <rect x="520" y="140" width="180" height="60" rx="6" fill="#7ec87e"/>
+    <rect x="520" y="220" width="180" height="60" rx="6" fill="#7ec87e"/>
+    <line x1="280" y1="130" x2="520" y2="170" stroke="#555" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <line x1="280" y1="210" x2="520" y2="170" stroke="#555" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <line x1="280" y1="210" x2="520" y2="250" stroke="#555" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <line x1="280" y1="290" x2="520" y2="250" stroke="#555" stroke-width="1.5" stroke-dasharray="4,4"/>
+  </g>
+  <text x="400" y="400" font-family="Inter, sans-serif" font-size="14" fill="#555" text-anchor="middle" letter-spacing="0.1em">FEATURE STORE</text>
+</svg>

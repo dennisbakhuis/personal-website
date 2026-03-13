@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect fill="#2a2a2a" width="800" height="500"/>
+  <g opacity="0.15">
+    <line x1="0" y1="400" x2="100" y2="350" stroke="#09f" stroke-width="2"/>
+    <line x1="100" y1="350" x2="200" y2="380" stroke="#09f" stroke-width="2"/>
+    <line x1="200" y1="380" x2="300" y2="200" stroke="#09f" stroke-width="2"/>
+    <line x1="300" y1="200" x2="400" y2="250" stroke="#09f" stroke-width="2"/>
+    <line x1="400" y1="250" x2="500" y2="150" stroke="#09f" stroke-width="2"/>
+    <line x1="500" y1="150" x2="600" y2="300" stroke="#09f" stroke-width="2"/>
+    <line x1="600" y1="300" x2="700" y2="100" stroke="#f44" stroke-width="3"/>
+    <line x1="700" y1="100" x2="800" y2="120" stroke="#f44" stroke-width="3"/>
+    <circle cx="700" cy="100" r="8" fill="#f44" opacity="0.6"/>
+  </g>
+  <g opacity="0.08">
+    <rect x="50" y="50" width="200" height="120" rx="8" fill="#fff"/>
+    <rect x="550" y="300" width="200" height="120" rx="8" fill="#fff"/>
+  </g>
+  <text x="400" y="260" font-family="Inter, sans-serif" font-size="14" fill="#555" text-anchor="middle" letter-spacing="0.1em">FRAUD DETECTION</text>
+</svg>
