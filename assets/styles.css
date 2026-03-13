@@ -7,10 +7,25 @@
 .radix-themes {
   background: transparent !important;
   color: inherit !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Reflex notification area — keep it out of the layout flow */
+section[aria-label="Notifications alt+T"] {
+  position: fixed !important;
+  z-index: 9999;
+  pointer-events: none;
 }
 
 html.dark, html.light {
   color-scheme: dark;
+}
+
+/* Ensure html/body have no stray padding */
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -342,8 +357,9 @@ hr {
 }
 
 /* ── Sections ── */
-section { padding: 150px 48px; }
-section > .container { max-width: 1200px; margin: 0 auto; }
+/* Scope to .page to avoid styling Reflex's injected <section> elements */
+.page section { padding: 150px 48px; }
+.page section > .container { max-width: 1200px; margin: 0 auto; }
 
 .label {
   font-size: 11px;
