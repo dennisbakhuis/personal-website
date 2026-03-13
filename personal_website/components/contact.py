@@ -31,7 +31,11 @@ def contact_section() -> rx.Component:
         rx.el.div(
             rx.el.div(
                 rx.el.h2(
-                    rx.html("Let's build<br>something<br><span>together</span>"),
+                    "Let's build",
+                    rx.el.br(),
+                    "something",
+                    rx.el.br(),
+                    rx.el.span("together"),
                 ),
                 rx.el.div(
                     *[_contact_link(l) for l in _LINKS],

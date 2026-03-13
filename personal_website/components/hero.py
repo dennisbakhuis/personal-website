@@ -25,7 +25,9 @@ def hero_section() -> rx.Component:
                 # Status bar
                 rx.el.div(
                     rx.el.span(
-                        rx.html("Data Scientist &amp;<br>Engineer"),
+                        "Data Scientist &",
+                        rx.el.br(),
+                        "Engineer",
                         class_name="status-role",
                     ),
                     rx.el.span(
@@ -38,15 +40,17 @@ def hero_section() -> rx.Component:
                 # Bottom: big name + tagline
                 rx.el.div(
                     rx.el.h1(
-                        rx.html("Dennis<br>Bakhuis"),
+                        "Dennis",
+                        rx.el.br(),
+                        "Bakhuis",
                         class_name="hero-name",
                     ),
                     rx.el.p(
-                        rx.html(
-                            "A data scientist and engineer<br>"
-                            "building scalable ML systems<br>"
-                            "and data pipelines."
-                        ),
+                        "A data scientist and engineer",
+                        rx.el.br(),
+                        "building scalable ML systems",
+                        rx.el.br(),
+                        "and data pipelines.",
                         class_name="hero-tagline",
                     ),
                     class_name="hero-bottom",
@@ -58,11 +62,15 @@ def hero_section() -> rx.Component:
         # Floating name for scroll transition
         rx.el.div(
             rx.el.span(
-                rx.html('Denn<span class="tittle-i">i</span>s'),
+                "Denn",
+                rx.el.span("i", class_name="tittle-i"),
+                "s",
                 class_name="fn-line fn-line1",
             ),
             rx.el.span(
-                rx.html('Bakhu<span class="tittle-i">i</span>s'),
+                "Bakhu",
+                rx.el.span("i", class_name="tittle-i"),
+                "s",
                 class_name="fn-line fn-line2",
             ),
             class_name="floating-name",

@@ -25,9 +25,8 @@ def about_section() -> rx.Component:
                 # Left column
                 rx.el.div(
                     rx.el.h2(
-                        rx.html(
-                            "Crafting systems that make data <span>useful</span>"
-                        ),
+                        "Crafting systems that make data ",
+                        rx.el.span("useful"),
                     ),
                     rx.el.div(
                         rx.el.img(
@@ -41,35 +40,34 @@ def about_section() -> rx.Component:
                 # Right column
                 rx.el.div(
                     rx.el.p(
-                        rx.html(
-                            "I'm a Data Scientist &amp; Engineer based in the "
-                            "Netherlands with a PhD in Physics. I specialize in "
-                            "building end-to-end ML systems — from document parsing "
-                            "and NLP pipelines to production-ready models. I've "
-                            "delivered solutions for large-scale energy "
-                            "infrastructure, built validation frameworks, and turned "
-                            "messy unstructured data into actionable insights."
-                        ),
+                        "I'm a Data Scientist & Engineer based in the "
+                        "Netherlands with a PhD in Physics. I specialize in "
+                        "building end-to-end ML systems — from document parsing "
+                        "and NLP pipelines to production-ready models. I've "
+                        "delivered solutions for large-scale energy "
+                        "infrastructure, built validation frameworks, and turned "
+                        "messy unstructured data into actionable insights.",
                     ),
                     rx.el.p(
-                        rx.html(
-                            "With 15+ years in the Python ecosystem, I build things "
-                            "that ship. I've created open-source tools like "
-                            "<strong>pigeonXT</strong> for data annotation in "
-                            "Jupyter, published a 25-part \"Python 10 Minutes a "
-                            'Day" series on Towards Data Science, and I\'m currently '
-                            "exploring Rust for performance-critical components."
-                        ),
+                        "With 15+ years in the Python ecosystem, I build things "
+                        "that ship. I've created open-source tools like ",
+                        rx.el.strong("pigeonXT"),
+                        " for data annotation in "
+                        "Jupyter, published a 25-part \"Python 10 Minutes a "
+                        "Day\" series on Towards Data Science, and I'm currently "
+                        "exploring Rust for performance-critical components.",
                     ),
                     rx.el.p(
-                        rx.html(
-                            "I'm available for short-term assignments in data "
-                            "science, NLP, and ML engineering. I "
-                            '<a href="#til">share things I learn</a> about data '
-                            "engineering, Python, and AI — and I believe in clean "
-                            "code, reproducible pipelines, and making complex topics "
-                            "accessible."
+                        "I'm available for short-term assignments in data "
+                        "science, NLP, and ML engineering. I ",
+                        rx.el.a(
+                            "share things I learn",
+                            href="#til",
                         ),
+                        " about data "
+                        "engineering, Python, and AI — and I believe in clean "
+                        "code, reproducible pipelines, and making complex topics "
+                        "accessible.",
                     ),
                     rx.el.div(
                         *[

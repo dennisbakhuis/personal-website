@@ -3,6 +3,16 @@
    Ported from index.html
 ───────────────────────────────────────── */
 
+/* Override Reflex/Radix theme defaults */
+.radix-themes {
+  background: transparent !important;
+  color: inherit !important;
+}
+
+html.dark, html.light {
+  color-scheme: dark;
+}
+
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
