@@ -38,6 +38,5 @@ def index_page() -> rx.Component:
             href="#contact",
             class_name="fixed-cta",
         ),
-        # External JS — inline rx.script doesn't execute in React SPA
-        rx.script(src="/site.js"),
+        # JS loaded via head_components in app config
     )
