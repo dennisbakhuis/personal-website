@@ -10,7 +10,7 @@ app = rx.App(
         "/styles.css",
     ],
     head_components=[
-        rx.el.script(src="/site.js", defer=True),
+        rx.script(src="/site.js"),
     ],
 )
 
